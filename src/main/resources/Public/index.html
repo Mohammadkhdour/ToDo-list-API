@@ -1,0 +1,23 @@
+<h1> add todo</h1>
+<form method="post" action="/todo">
+    <input type="number" name="id" placeholder="ID">
+    <input type="text" name="title" placeholder="Title">
+    <input type="text" name="description" placeholder="Description">
+    <input type="text" name="ISBN" placeholder="ISBN">
+    <button>Submit</button>
+</form>
+
+<h1> delete todo</h1>
+<form method="post" action="/todo/{id}">
+    <input type="number" name="id" placeholder="ID">
+    <button>Submit</button>
+</form>
+
+<h1> update todo</h1>
+<form method="post" action="/todo/{id}">
+    <input type="number" name="id" placeholder="ID">
+    <input type="text" name="title" placeholder="Title">
+    <input type="text" name="description" placeholder="Description">
+    <input type="text" name="ISBN" placeholder="ISBN">
+    <button>Submit</button>
+</form>

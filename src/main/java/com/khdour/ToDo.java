@@ -15,12 +15,12 @@ import lombok.ToString;
 @ToString
 @Builder
 public class ToDo {
+    private String id;
     private String title;
     private String description;
     private Boolean done;
     private ZonedDateTime createdOn;
     private ZonedDateTime updatedOn;
-    private String id;
     private String ISBN;
 
 }

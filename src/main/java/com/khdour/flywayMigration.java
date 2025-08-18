@@ -4,8 +4,13 @@ import javax.sql.DataSource;
 
 import org.flywaydb.core.Flyway;
 
+import com.google.inject.Inject;
+
 public class flywayMigration {
-     public static void migrateDatabase(DataSource dataSource) {
+    @Inject
+    DataSource dataSource;
+
+    public void migrateDatabase() {
 
             System.out.println("Starting Flyway migration...");
             System.out.println("Migration location: classpath:db/migration");
