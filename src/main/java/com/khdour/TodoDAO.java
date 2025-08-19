@@ -10,11 +10,11 @@ import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 
 @RegisterBeanMapper(ToDo.class)
-public interface TodoDAO2 {
-    @SqlUpdate("INSERT INTO todo (id, title, description, done, created_on, updated_on, isbn) VALUES (:id, :title, :description, :done, :createdOn, :updatedOn, :ISBN)")
+public interface TodoDAO {
+    @SqlUpdate("INSERT INTO todo (id, title, description, done, created_on, updated_on) VALUES (:id, :title, :description, :done, :createdOn, :updatedOn)")
     void insertTodo(@BindBean ToDo todo);
 
-    @SqlUpdate("UPDATE todo SET title = :title, description = :description, done = :done, updated_on = :updatedOn, isbn = :ISBN WHERE id = :id")
+    @SqlUpdate("UPDATE todo SET title = :title, description = :description, done = :done, updated_on = :updatedOn WHERE id = :id")
     void updateTodo(@BindBean ToDo todo);
 
     @SqlQuery("SELECT * FROM todo WHERE id = :id")

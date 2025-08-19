@@ -6,11 +6,11 @@ import java.util.Optional;
 import com.google.inject.Inject;
     
 public class ToDoService {
-    private TodoDAO2 todoDAO;
+    private TodoDAO todoDAO;
 
 
     @Inject
-    public ToDoService(TodoDAO2 todoDAO) {
+    public ToDoService(TodoDAO todoDAO) {
         this.todoDAO = todoDAO;
     }
 

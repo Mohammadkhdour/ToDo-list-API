@@ -7,7 +7,7 @@ import org.jdbi.v3.core.Jdbi;
 
 import com.google.inject.Inject;
 
-public class ToDoDaoImpl implements TodoDAO1 {
+public class ToDoDaoImpl implements TodoDAO {
     private Jdbi jdbi;
 
     @Inject
@@ -16,8 +16,8 @@ public class ToDoDaoImpl implements TodoDAO1 {
     }
     @Override
     public void insertTodo(ToDo todo) {
-        jdbi.withHandle(handle -> 
-            handle.createUpdate("INSERT INTO todo (id, title, description, done, created_on, updated_on, isbn) VALUES (:id, :title, :description, :done, :createdOn, :updatedOn, :ISBN)")
+        jdbi.withHandle(handle ->
+            handle.createUpdate("INSERT INTO todo (id, title, description, done, created_on, updated_on) VALUES (:id, :title, :description, :done, :createdOn, :updatedOn)")
                 .bindBean(todo)
                 .execute()
         );
@@ -26,7 +26,7 @@ public class ToDoDaoImpl implements TodoDAO1 {
     @Override
     public void updateTodo(ToDo todo) {
         jdbi.withHandle(handle ->
-            handle.createUpdate("UPDATE todo SET title = :title, description = :description, done = :done, updated_on = :updatedOn, isbn = :ISBN WHERE id = :id")
+            handle.createUpdate("UPDATE todo SET title = :title, description = :description, done = :done, updated_on = :updatedOn WHERE id = :id")
                 .bindBean(todo)
                 .execute()
         );

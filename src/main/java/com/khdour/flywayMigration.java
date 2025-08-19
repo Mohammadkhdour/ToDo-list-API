@@ -12,9 +12,6 @@ public class flywayMigration {
 
     public void migrateDatabase() {
 
-            System.out.println("Starting Flyway migration...");
-            System.out.println("Migration location: classpath:db/migration");
-
 
             Flyway flyway = Flyway.configure()
                 .dataSource(dataSource)
@@ -29,6 +26,5 @@ public class flywayMigration {
             // Run migration
             flyway.migrate();
             
-            System.out.println("Flyway migration completed successfully.");
     }
 }

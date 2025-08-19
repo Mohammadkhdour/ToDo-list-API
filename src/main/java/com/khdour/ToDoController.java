@@ -40,8 +40,7 @@ public class ToDoController {
                 ctx.formParam("description"),
                 false,
                 ZonedDateTime.now(),
-                ZonedDateTime.now(),
-                ctx.formParam("ISBN")
+                ZonedDateTime.now()
             );
             todoService.createTodo(todo);
             ctx.status(201);
@@ -53,7 +52,6 @@ public class ToDoController {
             ToDo todo = todoService.getTodo(id).orElseThrow(() -> new RuntimeException("Todo not found"));
             todo.setTitle(ctx.formParam("title"));
             todo.setDescription(ctx.formParam("description"));
-            todo.setISBN(ctx.formParam("ISBN"));
             todo.setUpdatedOn(ZonedDateTime.now());
             todoService.updateTodo(todo);
             ctx.html("Todo updated successfully!");

@@ -16,7 +16,7 @@ public class ToDoModule extends AbstractModule {
 
         bind(DataSource.class).toInstance(DataSourceConfig.getDataSource("jdbc:mysql://localhost:3306/todo", "root", "mohammad1234"));
 
-        bind(TodoDAO1.class).to(ToDoDaoImpl.class);
+       bind(TodoDAO.class).to(ToDoDaoImpl.class);
 
          bind(String.class)
          .annotatedWith(Names.named("JDBC"))
@@ -24,16 +24,13 @@ public class ToDoModule extends AbstractModule {
 
          bind(Jdbi.class).toInstance(Jdbi.create("jdbc:mysql://localhost:3306/todo", "root", "mohammad1234").installPlugin(new SqlObjectPlugin()));
 
-        // bind(Jdbi.class).in(Singleton.class);
-
-        bind(ToDoService.class);
 
 
     }
 
-        @Provides 
-        @Singleton
-        public TodoDAO2 provideTodoDAO2(Jdbi jdbi) {
-            return jdbi.onDemand(TodoDAO2.class);
-        }
+        // @Provides 
+        // @Singleton
+        // public TodoDAO provideTodoDAO(Jdbi jdbi) {
+        //     return jdbi.onDemand(TodoDAO.class);
+        // }
 }
