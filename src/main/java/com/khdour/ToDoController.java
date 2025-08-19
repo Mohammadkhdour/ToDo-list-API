@@ -1,6 +1,7 @@
 package com.khdour;
 
 import java.time.ZonedDateTime;
+import java.util.UUID;
 
 import com.google.inject.Inject;
 
@@ -21,26 +22,24 @@ public class ToDoController {
             config.staticFiles.add("/Public", Location.CLASSPATH);
         });
 
-        // app.get("/", ctx -> {
-        //     ctx.result("Welcome to the ToDo Application!");
-        // });
-
         app.get("/todos", ctx -> {
             //ctx.json(todoService.getAllTodos().toArray());
             String todosHtml = todoService.getAllTodos().stream()
                 .map(Object::toString)
                 .reduce("", (acc, todo) -> acc + todo + "<br>");
+
+            ctx.status(200);
             ctx.html(todosHtml);
         });
 
         app.post("/todo", ctx -> {
             ToDo todo = new ToDo(
-                ctx.formParam("id"),
+                UUID.randomUUID().toString(),
                 ctx.formParam("title"),
                 ctx.formParam("description"),
                 false,
                 ZonedDateTime.now(),
-                ZonedDateTime.now()
+                null
             );
             todoService.createTodo(todo);
             ctx.status(201);
@@ -50,22 +49,30 @@ public class ToDoController {
         app.put("/todo/{id}", ctx -> {
             String id = ctx.pathParam("id");
             ToDo todo = todoService.getTodo(id).orElseThrow(() -> new RuntimeException("Todo not found"));
-            todo.setTitle(ctx.formParam("title"));
-            todo.setDescription(ctx.formParam("description"));
+            if (ctx.formParam("title").length() > 0) {
+                todo.setTitle(ctx.formParam("title"));
+            }
+            if (ctx.formParam("description").length() > 0) {
+                todo.setDescription(ctx.formParam("description"));
+            }
+            todo.setDone(Boolean.parseBoolean(ctx.formParam("done")));
             todo.setUpdatedOn(ZonedDateTime.now());
             todoService.updateTodo(todo);
+            ctx.status(200);
             ctx.html("Todo updated successfully!");
         });
 
         app.delete("/todo/{id}", ctx -> {
             String id = ctx.pathParam("id");
             todoService.deleteTodo(id);
+            ctx.status(200);
             ctx.html("Todo deleted successfully!");
         });
 
         app.get("/todo/{id}", ctx -> {
             String id = ctx.pathParam("id");
             ToDo todo = todoService.getTodo(id).orElseThrow(() -> new RuntimeException("Todo not found"));
+            ctx.status(200);
             ctx.html(todo.toString());
         });
 

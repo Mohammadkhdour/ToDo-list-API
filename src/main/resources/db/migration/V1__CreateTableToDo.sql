@@ -4,6 +4,6 @@ create table if not exists todo (
     description text,
     done boolean not null,
     created_on timestamp  not null default current_timestamp,
-    updated_on timestamp,
+    updated_on timestamp default null,
     primary key (id)
 );
