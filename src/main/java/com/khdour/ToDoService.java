@@ -26,8 +26,8 @@ public class ToDoService {
         return todoDAO.getTodo(id);
     }
 
-    public void deleteTodo(String id) {
-        todoDAO.deleteTodo(id);
+    public int deleteTodo(String id) {
+        return todoDAO.deleteTodo(id);
     }
 
     public List<ToDo> getAllTodos() {

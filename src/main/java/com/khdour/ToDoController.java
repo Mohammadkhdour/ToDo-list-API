@@ -64,8 +64,11 @@ public class ToDoController {
 
         app.delete("/todo/{id}", ctx -> {
             String id = ctx.pathParam("id");
-            todoService.deleteTodo(id);
-            ctx.status(200);
+            if (todoService.deleteTodo(id) > 0) {
+                ctx.status(200);
+            } else {
+                ctx.status(404);
+            }
             ctx.html("Todo deleted successfully!");
         });
 

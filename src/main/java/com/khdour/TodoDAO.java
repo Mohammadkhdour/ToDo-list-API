@@ -21,7 +21,7 @@ public interface TodoDAO {
     Optional<ToDo> getTodo(@Bind("id") String id);
 
     @SqlUpdate("DELETE FROM todo WHERE id = :id")
-    void deleteTodo(@Bind("id") String id);
+    int deleteTodo(@Bind("id") String id);
 
     @SqlQuery("SELECT * FROM todo")
     List<ToDo> getAllTodos();

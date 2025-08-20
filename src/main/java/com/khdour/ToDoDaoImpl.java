@@ -43,8 +43,8 @@ public class ToDoDaoImpl implements TodoDAO {
     }
 
     @Override
-    public void deleteTodo(String id) {
-        jdbi.withHandle(handle ->
+    public int deleteTodo(String id) {
+        return jdbi.withHandle(handle ->
             handle.createUpdate("DELETE FROM todo WHERE id = :id")
                 .bind("id", id)
                 .execute()
