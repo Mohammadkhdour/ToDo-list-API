@@ -30,29 +30,6 @@ src/
 │   │   │   ├── ToDoController.java   # Controller for API endpoints
 │   │   │   ├── ToDoService.java      # Business logic for ToDo operations
 │   │   │   ├── ToDoDaoImpl.java      # DAO implementation for database operations
-│   │   │   ├── DataSourceConfig.java # Database configuration
-│   │   │   ├── flywayMigration.java  # Flyway migration setup
-│   ├── resources/
-│       ├── db/migration/             # Flyway migration scripts
-│       ├── Public/                   # Static files
-│           ├── index.html            # HTML file for the application interface
-├── pom.xml                            # Maven configuration file
-├── README.md                          # Project documentation
-```
-
-## Project Structure
-The project follows a modular structure for better organization and maintainability:
-
-```
-src/
-├── main/
-│   ├── java/
-│   │   ├── com/khdour/
-│   │   │   ├── App.java              # Main application entry point
-│   │   │   ├── ToDo.java             # ToDo model class
-│   │   │   ├── ToDoController.java   # Controller for API endpoints
-│   │   │   ├── ToDoService.java      # Business logic for ToDo operations
-│   │   │   ├── ToDoDaoImpl.java      # DAO implementation for database operations
 │   │   │   ├── TodoDAO.java          # DAO interface for database operations
 │   │   │   ├── ToDoModule.java       # Guice module for dependency injection
 │   │   │   ├── DataSourceConfig.java # Database configuration
