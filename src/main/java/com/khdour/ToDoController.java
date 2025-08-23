@@ -74,7 +74,12 @@ public class ToDoController {
 
         app.get("/todo/{id}", ctx -> {
             String id = ctx.pathParam("id");
-            ToDo todo = todoService.getTodo(id).orElseThrow(() -> new RuntimeException("Todo not found"));
+            ToDo todo = todoService.getTodo(id).orElse(null);
+            if(todo == null){
+                ctx.status(404);
+                ctx.html("Todo not found");
+                return;
+            }
             ctx.status(200);
             ctx.html(todo.toString());
         });

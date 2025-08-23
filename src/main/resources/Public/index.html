@@ -1,67 +1,83 @@
-<h1> add todo</h1>
-<form method="post" action="/todo">
-    <input type="text" name="title" placeholder="Title">
-    <input type="text" name="description" placeholder="Description">
-    <button>Submit</button>
-</form>
+<!DOCTYPE html>
+<html>
 
-<h1> delete todo</h1>
-<form method="delete" action="/todo/{id}" id="deleteForm">
-    <input type="text" name="id" id="todoId" placeholder="ID">
-    <button>Submit</button>
-</form>
+<head>
+    <link rel="stylesheet" href="style.css">
+</head>
 
-<h1> update todo</h1>
-<form method="post" action="/todo/{id}" id="updateForm">
-    <input type="text" name="id" placeholder="ID" id="id">
-    <input type="text" name="title" placeholder="Title" id="title">
-    <input type="text" name="description" placeholder="Description" id="description">
+<body>
+    <div>
+    <h1> add todo</h1>
+    <form class="form" method="post" action="/todo">
+        <input type="text" name="title" placeholder="Title">
+        <input type="text" name="description" placeholder="Description">
+        <button>Submit</button>
+    </div>
 
-    <label for="done">Done</label>
-    <input type="checkbox" name="done" id="done">
-    <button>Submit</button>
-</form>
+    </form>
+    <div>
+    <h1> delete todo</h1>
+    <form class="form" method="delete" action="/todo/{id}" id="deleteForm">
+        <input type="text" name="id" id="todoId" placeholder="ID">
+        <button>Submit</button>
+    </form>
+    </div>
 
-    <p id="result"></p>
+    <div>
+        <h1> update todo</h1>
+        <form class="form" method="post" action="/todo/{id}" id="updateForm">
+            <input type="text" name="id" placeholder="ID" id="id">
+            <input type="text" name="title" placeholder="Title" id="title">
+            <input type="text" name="description" placeholder="Description" id="description">
 
-    <script>
-        document.getElementById("deleteForm").addEventListener("submit", function(event) {
-            event.preventDefault(); // stop normal form submit
+            <label for="done">Done</label>
+            <input type="checkbox" name="done" id="done">
+            <button>Submit</button>
+        </form>
+    </div>
+</body>
 
-            const todoId = document.getElementById("todoId").value;
+</html>
+<p id="result"></p>
 
-            fetch(`http://localhost:8080/todo/${todoId}`, {
-                method: "DELETE"
-            })
+<script>
+    document.getElementById("deleteForm").addEventListener("submit", function (event) {
+        event.preventDefault(); // stop normal form submit
+
+        const todoId = document.getElementById("todoId").value;
+
+        fetch(`http://localhost:8080/todo/${todoId}`, {
+            method: "DELETE"
+        })
             .then(response => response.text())
             .then(message => {
                 document.getElementById("result").innerText = message;
             });
-        });
-    </script>
+    });
+</script>
 
 
-    <script>
-        document.getElementById("updateForm").addEventListener("submit", function(event) {
-            event.preventDefault();
+<script>
+    document.getElementById("updateForm").addEventListener("submit", function (event) {
+        event.preventDefault();
 
-            const todoId = document.getElementById("id").value;
-            const title = document.getElementById("title").value;
-            const description = document.getElementById("description").value;
-            const done = document.getElementById("done").checked;
+        const todoId = document.getElementById("id").value;
+        const title = document.getElementById("title").value;
+        const description = document.getElementById("description").value;
+        const done = document.getElementById("done").checked;
 
-            // build form data for request
-            const formData = new URLSearchParams();
-            formData.append("title", title);
-            formData.append("description", description);
-            formData.append("done", done);
+        // build form data for request
+        const formData = new URLSearchParams();
+        formData.append("title", title);
+        formData.append("description", description);
+        formData.append("done", done);
 
-            fetch(`http://localhost:8080/todo/${todoId}`, {
-                method: "PUT",
-                headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                body: formData.toString()
-            })
+        fetch(`http://localhost:8080/todo/${todoId}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: formData.toString()
+        })
             .then(response => response.text())
 
-        });
-    </script>
+    });
+</script>
