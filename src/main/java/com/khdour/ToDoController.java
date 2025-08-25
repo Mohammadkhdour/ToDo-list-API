@@ -1,12 +1,20 @@
 package com.khdour;
 
+import java.io.IOException;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.time.ZonedDateTime;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import com.google.inject.Inject;
 
 import io.javalin.Javalin;
 import io.javalin.http.staticfiles.Location;
+import io.pebbletemplates.pebble.PebbleEngine;
+import io.pebbletemplates.pebble.loader.ClasspathLoader;
+import io.pebbletemplates.pebble.template.PebbleTemplate;
 
 public class ToDoController {
     private final ToDoService todoService;
@@ -16,20 +24,26 @@ public class ToDoController {
         this.todoService = todoService;
     }
 
-    public void registerRoute(){
+    public void registerRoute() throws IOException{
+
+        PebbleEngine engine = new PebbleEngine.Builder().loader(new ClasspathLoader()).build();
+        PebbleTemplate compiledTemplate = engine.getTemplate("pebble/viewTodos.html.peb");
+        Writer writer = new StringWriter();
+
+   Map<String, Object> context = new HashMap<>();
+    context.put("todos", todoService.getAllTodos().toArray());
+
+    compiledTemplate.evaluate(writer, context);
+
+    String output = writer.toString();
                // configure static file
         Javalin app = Javalin.create(config -> {
             config.staticFiles.add("/Public", Location.CLASSPATH);
         });
 
         app.get("/todos", ctx -> {
-            //ctx.json(todoService.getAllTodos().toArray());
-            String todosHtml = todoService.getAllTodos().stream()
-                .map(Object::toString)
-                .reduce("", (acc, todo) -> acc + todo + "<br>");
-
             ctx.status(200);
-            ctx.html(todosHtml);
+           ctx.html(output);
         });
 
         app.post("/todo", ctx -> {

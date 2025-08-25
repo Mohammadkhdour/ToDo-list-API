@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<head>
+    <title>View Todos</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>View Todos</h1>
+    <div class="todo-list">
+        {% for todo in todos %}
+            <div class="todo-item">
+                <h2>{{ todo.title }}</h2>
+                <p>{{ todo.description }}</p>
+                <p>Created On: {{ todo.createdOn }}</p>
+                <p>Updated On: {{ todo.updatedOn }}</p>
+                <p>id: {{ todo.id }}</p>
+                <p>Status: {{ todo.done ? "Completed" : "Pending" }}</p>
+            </div>
+        {% else %}
+            <p>No todos available.</p>
+        {% endfor %}
+    </div>
+</body>
+</html>

@@ -1,6 +1,6 @@
 h1 {
-    color: blue;
-    border-bottom: 2px double black;
+    color: rgb(116, 92, 49);
+    border-bottom: 2px double rgb(0, 0, 0);
     border-radius: 2px;
     text-align: center;
     text-transform: capitalize;
@@ -16,7 +16,7 @@ h1 {
 .form input {
     margin: 5px 0;
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid #d6cbcb;
     border-radius: 4px;
 }
 
@@ -35,8 +35,30 @@ h1 {
 
 div {
     text-align: center;
-    background-color: antiquewhite;
+    background-color: rgb(70, 90, 93);
     border-radius: 8px;
-    margin: 20px 30%;
+    width: 50%;
+    margin: 20px auto;
     padding: 5px 10px;
+}
+
+
+.todo-item {
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #f9f9f9;
+}
+
+div.todo-item:hover {
+    background-color: #e0e0e0;
+}
+
+div.todo-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgb(37, 92, 100);
+
 }
