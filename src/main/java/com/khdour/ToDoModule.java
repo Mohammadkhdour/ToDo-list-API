@@ -23,7 +23,7 @@ public class ToDoModule extends AbstractModule {
          .toInstance("jdbc:mysql://localhost:3306/todo");
 
          bind(Jdbi.class).toInstance(Jdbi.create("jdbc:mysql://localhost:3306/todo", "root", "mohammad1234").installPlugin(new SqlObjectPlugin()));
-
+        bind(String.class).annotatedWith(Names.named("pebble")).toInstance("pebble/viewTodos.html.peb");
 
 
     }

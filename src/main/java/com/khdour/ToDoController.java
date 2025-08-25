@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import com.google.inject.Inject;
+import com.google.inject.name.Named;
 
 import io.javalin.Javalin;
 import io.javalin.http.staticfiles.Location;
@@ -18,43 +19,40 @@ import io.pebbletemplates.pebble.template.PebbleTemplate;
 
 public class ToDoController {
     private final ToDoService todoService;
+    private final pebbleController pebbleController;
+    String template;
 
     @Inject
-    public ToDoController(ToDoService todoService) {
+    public ToDoController(ToDoService todoService, pebbleController pebbleController,
+            @Named("pebble") String template) {
         this.todoService = todoService;
+        this.pebbleController = pebbleController;
+        this.template = template;
     }
 
-    public void registerRoute() throws IOException{
+    public void registerRoute() throws IOException {
 
-        PebbleEngine engine = new PebbleEngine.Builder().loader(new ClasspathLoader()).build();
-        PebbleTemplate compiledTemplate = engine.getTemplate("pebble/viewTodos.html.peb");
-        Writer writer = new StringWriter();
-
-   Map<String, Object> context = new HashMap<>();
-    context.put("todos", todoService.getAllTodos().toArray());
-
-    compiledTemplate.evaluate(writer, context);
-
-    String output = writer.toString();
-               // configure static file
+        // configure static file
         Javalin app = Javalin.create(config -> {
             config.staticFiles.add("/Public", Location.CLASSPATH);
         });
 
         app.get("/todos", ctx -> {
+            Map<String, Object> context = new HashMap<>();
+            context.put("todos", todoService.getAllTodos().toArray());
+            String output = pebbleController.render(context, template);
             ctx.status(200);
-           ctx.html(output);
+            ctx.html(output);
         });
 
         app.post("/todo", ctx -> {
             ToDo todo = new ToDo(
-                UUID.randomUUID().toString(),
-                ctx.formParam("title"),
-                ctx.formParam("description"),
-                false,
-                ZonedDateTime.now(),
-                null
-            );
+                    UUID.randomUUID().toString(),
+                    ctx.formParam("title"),
+                    ctx.formParam("description"),
+                    false,
+                    ZonedDateTime.now(),
+                    null);
             todoService.createTodo(todo);
             ctx.status(201);
             ctx.html("Todo created successfully!");
@@ -89,7 +87,7 @@ public class ToDoController {
         app.get("/todo/{id}", ctx -> {
             String id = ctx.pathParam("id");
             ToDo todo = todoService.getTodo(id).orElse(null);
-            if(todo == null){
+            if (todo == null) {
                 ctx.status(404);
                 ctx.html("Todo not found");
                 return;
