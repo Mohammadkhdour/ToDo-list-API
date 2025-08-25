@@ -1,8 +1,6 @@
 package com.khdour;
 
 import java.io.IOException;
-import java.io.StringWriter;
-import java.io.Writer;
 import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,9 +11,6 @@ import com.google.inject.name.Named;
 
 import io.javalin.Javalin;
 import io.javalin.http.staticfiles.Location;
-import io.pebbletemplates.pebble.PebbleEngine;
-import io.pebbletemplates.pebble.loader.ClasspathLoader;
-import io.pebbletemplates.pebble.template.PebbleTemplate;
 
 public class ToDoController {
     private final ToDoService todoService;

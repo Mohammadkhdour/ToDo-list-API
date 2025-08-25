@@ -5,7 +5,6 @@ import java.io.Writer;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.jetty.server.handler.ContextHandler.Context;
 
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
