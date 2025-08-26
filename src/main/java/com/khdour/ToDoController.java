@@ -56,11 +56,13 @@ public class ToDoController {
         app.put("/todo/{id}", ctx -> {
             String id = ctx.pathParam("id");
             ToDo todo = todoService.getTodo(id).orElseThrow(() -> new RuntimeException("Todo not found"));
-            if (ctx.formParam("title").length() > 0) {
-                todo.setTitle(ctx.formParam("title"));
+            String title = ctx.formParam("title");
+            if (title != null && title.length() > 4) {
+                todo.setTitle(title);
             }
-            if (ctx.formParam("description").length() > 0) {
-                todo.setDescription(ctx.formParam("description"));
+            String description = ctx.formParam("description");
+            if (description != null && description.length() > 4) {
+                todo.setDescription(description);
             }
             todo.setDone(Boolean.parseBoolean(ctx.formParam("done")));
             todo.setUpdatedOn(ZonedDateTime.now());
@@ -73,10 +75,11 @@ public class ToDoController {
             String id = ctx.pathParam("id");
             if (todoService.deleteTodo(id) > 0) {
                 ctx.status(200);
+                ctx.html("Todo deleted successfully!");
+
             } else {
                 ctx.status(404);
             }
-            ctx.html("Todo deleted successfully!");
         });
 
         app.get("/todo/{id}", ctx -> {
